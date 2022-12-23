@@ -30,7 +30,7 @@ async function invokeAction({ action, id, name, email, phone }) {
       break;
 
     case "remove":
-      await removeContact(contactId);
+      await removeContact(id);
       break;
 
     case "add":

@@ -17,6 +17,10 @@ async function readContacts() {
   return contacts;
 }
 
+async function writeContacts(contacts) {
+  await fs.writeFile(contactsPath, JSON.stringify(contacts, null, 2));
+}
+
 async function listContacts() {
   try {
     const contacts = await readContacts();
@@ -40,7 +44,7 @@ async function getContactById(contactId) {
     );
 
     if (filterContacts.length === 0) {
-      console.log("Нет контакта с таким ID:".yellow, contactId.red);
+      return console.log("Нет контакта с таким ID:".yellow, contactId.red);
     }
 
     console.table(filterContacts);
@@ -50,7 +54,19 @@ async function getContactById(contactId) {
 }
 
 async function removeContact(contactId) {
-  // ...твой код
+  const contacts = await readContacts();
+  const updateContacts = contacts.filter(
+    (contact) => String(contact.id) !== String(contactId)
+  );
+
+  if (updateContacts.length === 0) {
+    return console.log("Нет контакта с таким ID:".yellow, contactId.red);
+  }
+
+  console.log("Цей контакт видалено:".yellow);
+  await getContactById(contactId);
+
+  await writeContacts(updateContacts);
 }
 
 async function addContact(name, email, phone) {
