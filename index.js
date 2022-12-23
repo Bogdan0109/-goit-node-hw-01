@@ -26,7 +26,7 @@ async function invokeAction({ action, id, name, email, phone }) {
       break;
 
     case "get":
-      await getContactById(contactId);
+      await getContactById(id);
       break;
 
     case "remove":
