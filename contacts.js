@@ -1,30 +1,40 @@
+require("colors");
 const fs = require("fs").promises;
 const path = require("path");
 
 const contactsPath = path.resolve("./db/contacts.json");
 
-fs.readFile(contactsPath, "utf-8")
-  .then((data) => console.log(data))
-  .catch((err) => console.error(err));
 /*
  * Раскомментируй и запиши значение
  * const contactsPath = ;
  */
 
 // TODO: задокументировать каждую функцию
-function listContacts() {
+async function listContacts() {
+  try {
+    const contacts = await fs.readFile(contactsPath, "utf-8");
+    console.log("contacts.json: ".yellow, contacts.blue);
+
+    const contactsParse = JSON.parse(contacts);
+    console.log("СПИСОК КОНТАКТОВ:".yellow);
+    console.table(contactsParse);
+
+    return contactsParse;
+  } catch (error) {
+    console.error(error);
+  }
+}
+listContacts();
+
+async function getContactById(contactId) {
+  const contactsParse = listContacts();
+}
+
+async function removeContact(contactId) {
   // ...твой код
 }
 
-function getContactById(contactId) {
-  // ...твой код
-}
-
-function removeContact(contactId) {
-  // ...твой код
-}
-
-function addContact(name, email, phone) {
+async function addContact(name, email, phone) {
   // ...твой код
 }
 
