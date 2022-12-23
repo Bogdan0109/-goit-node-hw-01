@@ -1,6 +1,6 @@
 require("colors");
 const fs = require("fs").promises;
-const { table } = require("console");
+const { nanoid } = require("nanoid");
 const path = require("path");
 
 const contactsPath = path.resolve("./db/contacts.json");
@@ -70,7 +70,11 @@ async function removeContact(contactId) {
 }
 
 async function addContact(name, email, phone) {
-  // ...твой код
+  const contacts = await readContacts();
+  const id = nanoid();
+  const newContact = { id, name, email, phone };
+  const newContactsList = [...contacts, newContact];
+  await writeContacts(newContactsList);
 }
 
 module.exports = {
