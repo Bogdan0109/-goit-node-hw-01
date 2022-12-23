@@ -12,14 +12,14 @@ const contactsPath = path.resolve("./db/contacts.json");
 // TODO: задокументировать каждую функцию
 async function listContacts() {
   try {
-    const contacts = await fs.readFile(contactsPath, "utf-8");
-    console.log("contacts.json: ".yellow, contacts.blue);
+    const contactsJSON = await fs.readFile(contactsPath, "utf-8");
+    console.log("contacts.json: ".yellow, contactsJSON.blue);
 
-    const contactsParse = JSON.parse(contacts);
-    console.log("СПИСОК КОНТАКТОВ:".yellow);
-    console.table(contactsParse);
+    const contacts = JSON.parse(contactsJSON);
+    console.log("Список контактів:".yellow);
+    console.table(contacts);
 
-    return contactsParse;
+    return contacts;
   } catch (error) {
     console.error(error);
   }
@@ -27,7 +27,9 @@ async function listContacts() {
 listContacts();
 
 async function getContactById(contactId) {
-  const contactsParse = listContacts();
+  const contacts = listContacts();
+
+  const filterContacts = contacts.filter();
 }
 
 async function removeContact(contactId) {
