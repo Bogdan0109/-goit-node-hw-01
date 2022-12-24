@@ -5,12 +5,6 @@ const path = require("path");
 
 const contactsPath = path.resolve("./db/contacts.json");
 
-/*
- * Раскомментируй и запиши значение
- * const contactsPath = ;
- */
-
-// TODO: задокументировать каждую функцию
 async function readContacts() {
   const contactsJSON = await fs.readFile(contactsPath, "utf-8");
   const contacts = JSON.parse(contactsJSON);
@@ -25,7 +19,6 @@ async function listContacts() {
   try {
     const contacts = await readContacts();
 
-    console.log("Список контактів:".yellow);
     console.table(contacts);
 
     return contacts;
@@ -58,11 +51,12 @@ async function removeContact(contactId) {
     (contact) => String(contact.id) !== String(contactId)
   );
 
-  if (updateContacts.length === 0) {
+  const findId = contacts.find((contact) => contact.id === contactId);
+
+  if (!findId) {
     return console.log("Нет контакта с таким ID:".yellow, contactId.red);
   }
 
-  console.log("Цей контакт видалено:".yellow);
   await getContactById(contactId);
 
   await writeContacts(updateContacts);
@@ -73,7 +67,6 @@ async function addContact(name, email, phone) {
   const id = nanoid();
   const newContact = { id, name, email, phone };
 
-  console.log("Цей контакт додано:");
   console.table(newContact);
 
   const newContactsList = [...contacts, newContact];
