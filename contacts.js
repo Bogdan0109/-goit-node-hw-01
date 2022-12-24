@@ -25,7 +25,6 @@ async function listContacts() {
   try {
     const contacts = await readContacts();
 
-    console.log("contacts.json: ".yellow, contactsJSON.blue);
     console.log("Список контактів:".yellow);
     console.table(contacts);
 
@@ -73,6 +72,10 @@ async function addContact(name, email, phone) {
   const contacts = await readContacts();
   const id = nanoid();
   const newContact = { id, name, email, phone };
+
+  console.log("Цей контакт додано:");
+  console.table(newContact);
+
   const newContactsList = [...contacts, newContact];
   await writeContacts(newContactsList);
 }
